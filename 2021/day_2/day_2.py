@@ -1,6 +1,6 @@
 # Day 2, AOC 2021
-
-inputfile = open('input.txt', 'r')
+import sys
+inputfile = open(sys.argv[1], 'r')
 lines = inputfile.read().splitlines()
 
 # position[0] is horizontal, position[1] is depth
