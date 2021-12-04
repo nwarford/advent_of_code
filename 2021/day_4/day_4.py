@@ -56,9 +56,24 @@ def check_victory_col(col,card) :
         else :
             return True
 
+def get_unmarked_sum(card) :
+    sum = 0
+    for i in range(5) :
+        for j in range(5) :
+            if card[i+5][j] == 0 :
+                sum = sum + card[i][j]
+    return sum
+
 for i in range(2,len(lines),6) :
     bingo_card_list.append(parse_bingo_card(i))
 
 for draw in draw_order :
+
     for card in bingo_card_list :
         update_bingo_card(draw,card)
+
+    for card in bingo_card_list :
+        if check_victory(card) == True :
+            final_score = get_unmarked_sum(card) * draw
+            print("final score for part 1: %d" % final_score)
+            break
