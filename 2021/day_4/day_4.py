@@ -80,3 +80,29 @@ for i in range(2,len(lines),6) :
     bingo_card_list.append(parse_bingo_card(i))
 
 print("Final score for part 1: %d" % part_1_winner())
+
+# Part 2
+
+# Reparse bingo cards rather than try to reset
+
+def part_2_winner() :
+    for draw in draw_order :
+        for card in bingo_card_list_2 :
+            update_bingo_card(draw,card)
+
+        for i in range(len(bingo_card_list_2)) :
+            if check_victory(bingo_card_list_2[i]) == True :
+                winners[i] = 1
+                try :
+                    nonwin_index = winners.index(0)
+                except ValueError :
+                    print(card)
+                    print(draw)
+                    return   get_unmarked_sum(card) * draw
+
+bingo_card_list_2 = []
+for i in range(2,len(lines),6) :
+    bingo_card_list_2.append(parse_bingo_card(i))
+winners = [0] * len(bingo_card_list_2)
+
+print("Final score for part 2: %d" % part_2_winner())
