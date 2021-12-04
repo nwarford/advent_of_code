@@ -46,15 +46,15 @@ def check_victory_row(row,card) :
     for entry in row :
         if entry == 0 :
             return False
-        else :
-            return True
+    # print("Winning row found")
+    return True
 
 def check_victory_col(col,card) :
     for i in range(5) :
         if card[i+5][col] == 0 :
             return False
-        else :
-            return True
+    # print("Winning column found at column %d" % i)
+    return True
 
 def get_unmarked_sum(card) :
     sum = 0
@@ -64,16 +64,19 @@ def get_unmarked_sum(card) :
                 sum = sum + card[i][j]
     return sum
 
+def part_1_winner() :
+    for draw in draw_order :
+
+        for card in bingo_card_list :
+            update_bingo_card(draw,card)
+
+        for card in bingo_card_list :
+            if check_victory(card) == True :
+                # print(card)
+                # print(get_unmarked_sum(card))
+                return get_unmarked_sum(card) * draw
+
 for i in range(2,len(lines),6) :
     bingo_card_list.append(parse_bingo_card(i))
 
-for draw in draw_order :
-
-    for card in bingo_card_list :
-        update_bingo_card(draw,card)
-
-    for card in bingo_card_list :
-        if check_victory(card) == True :
-            final_score = get_unmarked_sum(card) * draw
-            print("final score for part 1: %d" % final_score)
-            break
+print("Final score for part 1: %d" % part_1_winner())
