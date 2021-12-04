@@ -83,22 +83,24 @@ print("Final score for part 1: %d" % part_1_winner())
 
 # Part 2
 
-# Reparse bingo cards rather than try to reset
-
 def part_2_winner() :
     for draw in draw_order :
         for card in bingo_card_list_2 :
             update_bingo_card(draw,card)
 
         for i in range(len(bingo_card_list_2)) :
-            if check_victory(bingo_card_list_2[i]) == True :
+            curr_card = bingo_card_list_2[i]
+            if check_victory(curr_card) == True :
                 winners[i] = 1
                 try :
                     nonwin_index = winners.index(0)
                 except ValueError :
-                    print(card)
+                    print(curr_card)
                     print(draw)
-                    return   get_unmarked_sum(card) * draw
+                    print(get_unmarked_sum(curr_card))
+                    return   get_unmarked_sum(curr_card) * draw
+
+# Reparse bingo cards rather than try to reset
 
 bingo_card_list_2 = []
 for i in range(2,len(lines),6) :
