@@ -95,9 +95,9 @@ def part_2_winner() :
                 try :
                     nonwin_index = winners.index(0)
                 except ValueError :
-                    print(curr_card)
-                    print(draw)
-                    print(get_unmarked_sum(curr_card))
+                    # print(curr_card)
+                    # print(draw)
+                    # print(get_unmarked_sum(curr_card))
                     return   get_unmarked_sum(curr_card) * draw
 
 # Reparse bingo cards rather than try to reset
