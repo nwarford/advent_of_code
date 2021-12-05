@@ -8,14 +8,10 @@ def parse_line(input_str) :
     # output: start and end coordinates in the form [x1,y1], [x2,y2]
 
     front,back = input_str.split(" -> ")
-    # print(front)
 
     start_coord = map(int,front.split(","))
     end_coord = map(int,back.split(","))
-    # print(start_coord)
     return start_coord, end_coord
-
-# parse_line(lines[0])
 
 def get_max_coord(coord_list) :
     # input: a list of pairs of coordinates
@@ -29,6 +25,7 @@ def get_max_coord(coord_list) :
             if tuple[1] > max_y :
                 max_y = tuple[1]
 
+    # the coordinates are zero indexed, but i'm using these numbers for the absolute size of the array, so they need to be incremented.
     max_x += 1
     max_y += 1
     return max_x, max_y
@@ -36,20 +33,19 @@ def get_max_coord(coord_list) :
 def create_grid(x_size,y_size) :
     # input: size of grid in 2d
     # output: dict, indexed by tuples
-    # print(x_size)
+
     new_grid = { (i,j):0 for i in range(x_size) for j in range(y_size) }
     return new_grid
 
 def update_line(coord, part1) :
-    # input: the coordinates (we'll use the global grid here, since it should remain the same between calls), part1 is a boolean if we're working on part 1
+    # input: the coordinates (we'll use the global grid here, since it should remain the same between calls), part1 is a boolean if we're working on part 1 so we can only do horiz/vert
     # no output, we'll edit grid directly
 
     start_x = coord[0][0]
     start_y = coord[0][1]
     end_x = coord[1][0]
     end_y = coord[1][1]
-    # print(grid)
-    # print(start_x,start_y,end_x,end_y)
+
     if part1 :
         if not((start_x == end_x) or (start_y == end_y)) :
             return
@@ -74,7 +70,7 @@ def update_line(coord, part1) :
             grid[(x,y)] +=1
 
 def get_range(start,end) :
-    # get the integers from start to end, regardless of which is greater
+    # get the integers from start to end, regardless of which is greater *in correct order*
     if start < end :
         # if we're going (say) from 0 to 4, we want to return [0,1,2,3,4]. Range
         return(range(start,end+1))
@@ -83,36 +79,34 @@ def get_range(start,end) :
         return(range(start,end-1,-1))
 
 def print_grid() :
+    # since we're using a dict, some effort is required
     for i in range(max_coords[0]) :
         curr_row = []
         for j in range(max_coords[1]) :
-            # print("Appending %d, %d" % (i,j))
-            # print(grid[(i,j)])
+            # I print these backwords because (x,y) makes logical sense but the as [row, col], but the examples in the prompt are printed opposite
             curr_row.append(grid[(j,i)])
         print(curr_row)
 
 def eval_grid() :
+    # thank goodness for list comprehension style syntax
     return sum(x > 1 for x in grid.values())
 
 parsed_coord = []
 for line in lines :
     parsed_coord.append(parse_line(line))
 
-# print(test_coordinates[0])
 max_coords = get_max_coord(parsed_coord)
 grid = create_grid(max_coords[0],max_coords[1])
 
 for coord in parsed_coord :
     update_line(coord,True)
 
-# print_grid()
 print("count for part 1: %d" % eval_grid())
 
+# resetting for part 2 - clear removes all keys from the dict
 grid.clear()
 grid = create_grid(max_coords[0],max_coords[1])
-# print_grid()
 for coord in parsed_coord :
     update_line(coord,False)
 
 print("count for part 2: %d" % eval_grid())
-# print_grid()
