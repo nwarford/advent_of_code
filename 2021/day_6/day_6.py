@@ -59,11 +59,13 @@ class School :
 print("Part 1\n")
 part1_school = School(init_fish)
 for i in range(80):
+    if (i % 10 == 9) :
+        print("Calculating day %d..." % (i+1))
     part1_school.update_school()
-
+print("")
 part1_school.display_school()
 
-print("Part 2\n")
+print("\nPart 2\n")
 part2_school = School(init_fish)
 for i in range(256):
     if (i % 10 == 9) :
