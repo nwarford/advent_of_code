@@ -52,9 +52,8 @@ class School :
 
         # for all of those fish, create the appropriate number of fish with the relevant age
         # and reset them to the reset age
-        for i in range(repro_fish_count) :
-            self.fish_dict[self.SPAWN_AGE] += 1
-            self.fish_dict[self.RESET_AGE] += 1
+        self.fish_dict[self.SPAWN_AGE] += repro_fish_count
+        self.fish_dict[self.RESET_AGE] += repro_fish_count
 
 print("Part 1\n")
 part1_school = School(init_fish)
